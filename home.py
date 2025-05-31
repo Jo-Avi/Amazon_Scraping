@@ -13,7 +13,7 @@ def get_base64_image(image_path):
         return base64.b64encode(img_file.read()).decode()
 
 # Use Streamlit's experimental_singleton to cache the WebDriver instance
-@st.experimental_singleton
+@st.cache_resource
 def get_driver():
     options = Options()
     options.add_argument("--headless")
