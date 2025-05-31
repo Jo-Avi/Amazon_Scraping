@@ -1,4 +1,6 @@
-Flask
-selenium
-beautifulsoup4
-fake-useragent
+    streamlit
+    pandas
+    beautifulsoup4
+    selenium
+    webdriver-manager
+    # other dependencies you might have
