@@ -5,8 +5,8 @@ import base64
 import streamlit.components.v1 as components
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
-from webdriver_manager.chrome import ChromeService
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
