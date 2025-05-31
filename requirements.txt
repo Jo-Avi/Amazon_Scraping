@@ -1,6 +1,7 @@
     streamlit
     pandas
     beautifulsoup4
-    selenium
-    webdriver-manager
+    requests
+    # selenium
+    # webdriver-manager
     # other dependencies you might have
