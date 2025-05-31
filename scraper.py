@@ -5,9 +5,8 @@ import random
 
 
 
-def scrape_amazon(search_term, max_pages=5):
-    # Remove driver parameter as we are not using Selenium
-    # def scrape_amazon(driver, search_term, max_pages=3):
+def scrape_amazon(search_term, max_products=25, max_pages=10):
+    
 
     base_url = f"https://www.amazon.in/s?k={search_term.replace(' ', '+')}"
     results = []
@@ -34,6 +33,9 @@ def scrape_amazon(search_term, max_pages=5):
         products = soup.select('div.s-main-slot div[data-component-type="s-search-result"]')
 
         for product in products:
+            if len(results) >= max_products: # Check if we have enough products
+                print(f"Scraped {max_products} products, stopping.")
+                break # Stop collecting products
             try:
                 link_tag = product.select_one('a.a-link-normal.s-link-style.a-text-normal')
                 name_tag = link_tag.select_one('h2 span') if link_tag else None
@@ -53,6 +55,10 @@ def scrape_amazon(search_term, max_pages=5):
 
         # Optional: Add delay between pages
         time.sleep(random.uniform(2, 4))
+
+        if len(results) >= max_products: # Check again after processing the page
+            print(f"Reached {max_products} products after processing page {page}.")
+            break # Stop fetching pages
 
     # Remove driver quit
     # finally:
