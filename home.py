@@ -3,10 +3,26 @@ import pandas as pd
 from scraper import scrape_amazon
 import base64
 import streamlit.components.v1 as components
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from webdriver_manager.chrome import ChromeDriverManager
+from webdriver_manager.chrome import ChromeService
 
 def get_base64_image(image_path):
     with open(image_path, "rb") as img_file:
         return base64.b64encode(img_file.read()).decode()
+
+# Use Streamlit's experimental_singleton to cache the WebDriver instance
+@st.experimental_singleton
+def get_driver():
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    
+    # Use ChromeDriverManager to automatically download and manage ChromeDriver
+    return webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=options)
 
 # Set page config
 st.set_page_config(
@@ -304,7 +320,9 @@ def show_scraper():
     # Search button
     if st.button("Search Products") and search_term.strip():
         with st.spinner("🔍 Searching Amazon..."):
-            st.session_state.products = scrape_amazon(search_term)
+            # Get the cached driver instance and pass it to scrape_amazon
+            driver = get_driver()
+            st.session_state.products = scrape_amazon(driver, search_term)
 
     # Sorting logic
     def price_to_int(p):
