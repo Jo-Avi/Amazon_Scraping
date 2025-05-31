@@ -2,14 +2,10 @@ import requests # Import the requests library
 from bs4 import BeautifulSoup
 import time
 import random
-# Remove Selenium imports
-# from selenium import webdriver
-# from selenium.webdriver.chrome.options import Options
-# from selenium.webdriver.chrome.service import Service as ChromeService
-# from webdriver_manager.chrome import ChromeDriverManager
 
 
-def scrape_amazon(search_term, max_pages=3):
+
+def scrape_amazon(search_term, max_pages=5):
     # Remove driver parameter as we are not using Selenium
     # def scrape_amazon(driver, search_term, max_pages=3):
 
